@@ -4,6 +4,8 @@ Een ukelele in je browser om akkoorden te leren. · A ukulele in your browser fo
 
 ## Nederlands
 
+Speel direct: https://rpg86x.github.io/ukelele-oefenkamer/
+
 Open `index.html` in een browser. Er is niets te installeren; alles zit in dat ene bestand.
 
 - **Handmatig aanslaan**: veeg omlaag of omhoog over de snaren, tik één snaar aan, of gebruik de knoppen. Toetsenbord: `↓` omlaag, `↑` omhoog.
@@ -13,8 +15,11 @@ Open `index.html` in een browser. Er is niets te installeren; alles zit in dat e
 - **Taal**: schakel rechtsboven tussen NL en EN.
 
 Stemming: G C E A. Het geluid wordt in de browser gemaakt (Web Audio), er zijn geen geluidsbestanden.
+Deze app is gratis. Heb je er plezier van? [Trakteer me op een koffie ☕](https://urbantechmonk.gumroad.com/coffee)
 
 ## English
+
+Play it now: https://rpg86x.github.io/ukelele-oefenkamer/
 
 Open `index.html` in a browser. Nothing to install; everything is in that one file.
 
@@ -25,3 +30,5 @@ Open `index.html` in a browser. Nothing to install; everything is in that one fi
 - **Language**: switch between NL and EN in the top right.
 
 Tuning: G C E A. The sound is synthesised in the browser (Web Audio); there are no audio files.
+
+This app is free. Enjoying it? [Buy me a coffee ☕](https://urbantechmonk.gumroad.com/coffee)

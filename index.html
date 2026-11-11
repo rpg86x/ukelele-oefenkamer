@@ -123,6 +123,9 @@ svg.dia{width:170px;height:auto;display:block}
 .prog span{font-size:13px;color:var(--muted);text-align:right}
 .prog[aria-pressed="true"]{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
 
+.foot{display:flex;align-items:center;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:14px}
+.donate{display:inline-block;border:1.5px solid var(--accent);color:var(--accent);border-radius:999px;padding:8px 16px;font-weight:700;text-decoration:none}
+.donate:hover{background:var(--accent);color:var(--accent-ink)}
 .levels{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
 .level h3{margin:0 0 2px;font-size:16px}
 .level p{margin:0 0 8px;font-size:13px;color:var(--muted)}
@@ -196,6 +199,8 @@ svg.dia{width:170px;height:auto;display:block}
     <h2 data-t="hLevels"></h2>
     <div class="levels" id="levels"></div>
   </section>
+
+  <footer class="foot"><span data-t="donateLead"></span><a class="donate" href="https://urbantechmonk.gumroad.com/coffee" target="_blank" rel="noopener" data-t="donate"></a></footer>
 </div>
 
 <script>
@@ -243,7 +248,7 @@ var PATS=[
 ];
 
 var S={chord:"C",prog:0,pos:0,pat:0,bpm:80,auto:true,lang:"nl"};
-var T={"nl": {"keys": "Toetsenbord: <kbd>↓</kbd> omlaag · <kbd>↑</kbd> omhoog · <kbd>spatie</kbd> ritme aan/uit · <kbd>1</kbd>–<kbd>4</kbd> akkoord", "hSeq": "Jouw reeks", "down": "Omlaag", "up": "Omhoog", "hAuto": "Automatisch ritme", "start": "Start", "stop": "Stop", "autoSwitch": "Wissel elke maat naar het volgende akkoord van je reeks", "hLearn": "Zo pak je het akkoord", "hProgs": "Oefenreeksen", "hLevels": "Akkoorden per stap", "open": "los", "fret": "vakje ", "mute": "niet", "and": "en", "dia": "Akkoorddiagram", "strSuffix": "-snaar", "padAria": "Snaren. Veeg omlaag of omhoog om aan te slaan.", "hGuitar": "Gitaar", "title": "Ukelele Oefenkamer", "t1": "Ukelele", "t2": "Oefenkamer", "padHint": "Veeg over de snaren, of tik één snaar aan", "legend": "Cijfers in de stippen: 1 wijsvinger · 2 middelvinger · 3 ringvinger · 4 pink. Een open rondje boven de snaar betekent: snaar los laten klinken."}, "en": {"keys": "Keyboard: <kbd>↓</kbd> down · <kbd>↑</kbd> up · <kbd>space</kbd> rhythm on/off · <kbd>1</kbd>–<kbd>4</kbd> chord", "hSeq": "Your sequence", "down": "Down", "up": "Up", "hAuto": "Automatic rhythm", "start": "Start", "stop": "Stop", "autoSwitch": "Move to the next chord of your sequence every bar", "hLearn": "How to hold the chord", "hProgs": "Practice sequences", "hLevels": "Chords by step", "open": "open", "fret": "fret ", "mute": "muted", "and": "&", "dia": "Chord diagram", "strSuffix": " string", "padAria": "Strings. Swipe down or up to strum.", "hGuitar": "Guitar", "title": "Ukulele Practice Room", "t1": "Ukulele", "t2": "Practice Room", "padHint": "Swipe across the strings, or tap a single string", "legend": "Numbers in the dots: 1 index · 2 middle · 3 ring · 4 pinky. An open circle above a string means: let it ring open."}};
+var T={"nl": {"keys": "Toetsenbord: <kbd>↓</kbd> omlaag · <kbd>↑</kbd> omhoog · <kbd>spatie</kbd> ritme aan/uit · <kbd>1</kbd>–<kbd>4</kbd> akkoord", "donateLead": "Deze app is gratis. Heb je er plezier van?", "donate": "☕ Trakteer me op een koffie", "hSeq": "Jouw reeks", "down": "Omlaag", "up": "Omhoog", "hAuto": "Automatisch ritme", "start": "Start", "stop": "Stop", "autoSwitch": "Wissel elke maat naar het volgende akkoord van je reeks", "hLearn": "Zo pak je het akkoord", "hProgs": "Oefenreeksen", "hLevels": "Akkoorden per stap", "open": "los", "fret": "vakje ", "mute": "niet", "and": "en", "dia": "Akkoorddiagram", "strSuffix": "-snaar", "padAria": "Snaren. Veeg omlaag of omhoog om aan te slaan.", "hGuitar": "Gitaar", "title": "Ukelele Oefenkamer", "t1": "Ukelele", "t2": "Oefenkamer", "padHint": "Veeg over de snaren, of tik één snaar aan", "legend": "Cijfers in de stippen: 1 wijsvinger · 2 middelvinger · 3 ringvinger · 4 pink. Een open rondje boven de snaar betekent: snaar los laten klinken."}, "en": {"keys": "Keyboard: <kbd>↓</kbd> down · <kbd>↑</kbd> up · <kbd>space</kbd> rhythm on/off · <kbd>1</kbd>–<kbd>4</kbd> chord", "donateLead": "This app is free. Enjoying it?", "donate": "☕ Buy me a coffee", "hSeq": "Your sequence", "down": "Down", "up": "Up", "hAuto": "Automatic rhythm", "start": "Start", "stop": "Stop", "autoSwitch": "Move to the next chord of your sequence every bar", "hLearn": "How to hold the chord", "hProgs": "Practice sequences", "hLevels": "Chords by step", "open": "open", "fret": "fret ", "mute": "muted", "and": "&", "dia": "Chord diagram", "strSuffix": " string", "padAria": "Strings. Swipe down or up to strum.", "hGuitar": "Guitar", "title": "Ukulele Practice Room", "t1": "Ukulele", "t2": "Practice Room", "padHint": "Swipe across the strings, or tap a single string", "legend": "Numbers in the dots: 1 index · 2 middle · 3 ring · 4 pinky. An open circle above a string means: let it ring open."}};
 function t(k){return T[S.lang][k];}
 function L(o){return (o&&typeof o==="object")?o[S.lang]:o;}
 
