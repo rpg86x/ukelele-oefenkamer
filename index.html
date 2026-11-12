@@ -131,12 +131,33 @@ svg.dia{width:170px;height:auto;display:block}
 .level h3{margin:0 0 2px;font-size:16px}
 .level p{margin:0 0 8px;font-size:13px;color:var(--muted)}
 .level .quick .chip{font-size:15px;padding:6px 12px;min-width:50px}
+
+/* het gat schaalt mee met de hoogte van het instrument */
+.hole{width:auto;height:64%;aspect-ratio:1;margin:0;transform:translate(-50%,-50%)}
+body{touch-action:manipulation}
+/* Tablet en desktop: links staat het instrument vast, alleen de rechterkant scrolt. */
+@media (min-width:820px) and (min-height:560px){
+  html,body{height:100%;overflow:hidden;overscroll-behavior:none}
+  .wrap{height:100%;max-width:1500px;padding:12px 16px;gap:12px}
+  header{flex:none}
+  h1{font-size:30px}
+  .grid{flex:1;min-height:0;align-items:stretch}
+  .col{min-height:0}
+  .col.left{overflow:hidden;touch-action:none}
+  .col.left .inst{flex:1;min-height:0;padding:14px;gap:10px}
+  .col.left .tempo input{touch-action:pan-x}
+  .pad{height:auto;flex:1 1 0;min-height:110px}
+  .col.right{overflow-y:auto;overscroll-behavior:contain;padding-right:6px;padding-bottom:12px}
+}
+@media (min-width:820px) and (min-height:560px) and (pointer:coarse){
+  .hd p{display:none}
+}
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
-    <h1><span id="t1"></span> <span id="t2" class="acc"></span><small>1.1</small></h1>
+    <h1><span id="t1"></span> <span id="t2" class="acc"></span><small>1.2</small></h1>
     <div class="hd">
       <p data-t="keys"></p>
       <div class="lang" role="group" aria-label="Taal / Language"><button type="button" data-lang="nl">NL</button><button type="button" data-lang="en">EN</button></div>
@@ -144,8 +165,8 @@ svg.dia{width:170px;height:auto;display:block}
   </header>
 
   <div class="grid">
-    <div class="col">
-      <section class="card">
+    <div class="col left">
+      <section class="card inst">
         <h2 data-t="hSeq"></h2>
         <div class="quick" id="quick"></div>
         <div class="pad" id="pad">
@@ -156,12 +177,7 @@ svg.dia{width:170px;height:auto;display:block}
           <button class="strum" id="btnDown" type="button"><span class="arr">↓</span> <span data-t="down"></span></button>
           <button class="strum" id="btnUp" type="button"><span class="arr">↑</span> <span data-t="up"></span></button>
         </div>
-      </section>
-
-      <section class="card">
-        <h2 data-t="hAuto"></h2>
         <div class="steps" id="steps"></div>
-        <div class="pats" id="pats"></div>
         <div class="row">
           <button class="play" id="play" type="button"></button>
           <div class="tempo">
@@ -170,17 +186,16 @@ svg.dia{width:170px;height:auto;display:block}
             <output id="bpmOut" for="bpm">80 bpm</output>
           </div>
         </div>
-        <label class="check" for="autoSwitch"><input id="autoSwitch" type="checkbox" checked> <span data-t="autoSwitch"></span></label>
       </section>
     </div>
 
-    <div class="col">
+    <div class="col right">
       <section class="card">
         <h2 data-t="hLearn"></h2>
         <div class="learn">
           <div id="dia"></div>
           <div>
-            <p class="cname" id="cname">C</p>
+            <p class="cname" id="cname"></p>
             <p class="cfull" id="cfull"></p>
             <div class="notes" id="notes"></div>
             <p class="tip" id="tip"></p>
@@ -193,15 +208,21 @@ svg.dia{width:170px;height:auto;display:block}
         <h2 data-t="hProgs"></h2>
         <div class="progs" id="progs"></div>
       </section>
+
+      <section class="card">
+        <h2 data-t="hPat"></h2>
+        <div class="pats" id="pats"></div>
+        <label class="check" for="autoSwitch"><input id="autoSwitch" type="checkbox" checked> <span data-t="autoSwitch"></span></label>
+      </section>
+
+      <section class="card">
+        <h2 data-t="hLevels"></h2>
+        <div class="levels" id="levels"></div>
+      </section>
+
+      <footer class="foot"><span data-t="donateLead"></span><a class="donate" href="https://urbantechmonk.gumroad.com/coffee" target="_blank" rel="noopener" data-t="donate"></a></footer>
     </div>
   </div>
-
-  <section class="card">
-    <h2 data-t="hLevels"></h2>
-    <div class="levels" id="levels"></div>
-  </section>
-
-  <footer class="foot"><span data-t="donateLead"></span><a class="donate" href="https://urbantechmonk.gumroad.com/coffee" target="_blank" rel="noopener" data-t="donate"></a></footer>
 </div>
 
 <script>
@@ -256,7 +277,7 @@ var PATS=[
 ];
 
 var S={chord:"C",prog:0,pos:0,pat:0,bpm:80,auto:true,lang:"nl"};
-var T={"nl": {"keys": "Toetsenbord: <kbd>↓</kbd> omlaag · <kbd>↑</kbd> omhoog · <kbd>spatie</kbd> ritme aan/uit · <kbd>1</kbd>–<kbd>4</kbd> akkoord", "donateLead": "Deze app is gratis. Heb je er plezier van?", "donate": "☕ Trakteer me op een koffie", "reggae": "Reggae · vereenvoudigde akkoorden", "hSeq": "Jouw reeks", "down": "Omlaag", "up": "Omhoog", "hAuto": "Automatisch ritme", "start": "Start", "stop": "Stop", "autoSwitch": "Wissel elke maat naar het volgende akkoord van je reeks", "hLearn": "Zo pak je het akkoord", "hProgs": "Oefenreeksen", "hLevels": "Akkoorden per stap", "open": "los", "fret": "vakje ", "mute": "niet", "and": "en", "dia": "Akkoorddiagram", "strSuffix": "-snaar", "padAria": "Snaren. Veeg omlaag of omhoog om aan te slaan.", "hGuitar": "Gitaar", "title": "Ukelele Oefenkamer", "t1": "Ukelele", "t2": "Oefenkamer", "padHint": "Veeg over de snaren, of tik één snaar aan", "legend": "Cijfers in de stippen: 1 wijsvinger · 2 middelvinger · 3 ringvinger · 4 pink. Een open rondje boven de snaar betekent: snaar los laten klinken."}, "en": {"keys": "Keyboard: <kbd>↓</kbd> down · <kbd>↑</kbd> up · <kbd>space</kbd> rhythm on/off · <kbd>1</kbd>–<kbd>4</kbd> chord", "donateLead": "This app is free. Enjoying it?", "donate": "☕ Buy me a coffee", "reggae": "Reggae · simplified chords", "hSeq": "Your sequence", "down": "Down", "up": "Up", "hAuto": "Automatic rhythm", "start": "Start", "stop": "Stop", "autoSwitch": "Move to the next chord of your sequence every bar", "hLearn": "How to hold the chord", "hProgs": "Practice sequences", "hLevels": "Chords by step", "open": "open", "fret": "fret ", "mute": "muted", "and": "&", "dia": "Chord diagram", "strSuffix": " string", "padAria": "Strings. Swipe down or up to strum.", "hGuitar": "Guitar", "title": "Ukulele Practice Room", "t1": "Ukulele", "t2": "Practice Room", "padHint": "Swipe across the strings, or tap a single string", "legend": "Numbers in the dots: 1 index · 2 middle · 3 ring · 4 pinky. An open circle above a string means: let it ring open."}};
+var T={"nl": {"keys": "Toetsenbord: <kbd>↓</kbd> omlaag · <kbd>↑</kbd> omhoog · <kbd>spatie</kbd> ritme aan/uit · <kbd>1</kbd>–<kbd>4</kbd> akkoord", "donateLead": "Deze app is gratis. Heb je er plezier van?", "donate": "☕ Trakteer me op een koffie", "reggae": "Reggae · vereenvoudigde akkoorden", "hPat": "Ritmepatroon", "hSeq": "Jouw reeks", "down": "Omlaag", "up": "Omhoog", "hAuto": "Automatisch ritme", "start": "Start", "stop": "Stop", "autoSwitch": "Wissel elke maat naar het volgende akkoord van je reeks", "hLearn": "Zo pak je het akkoord", "hProgs": "Oefenreeksen", "hLevels": "Akkoorden per stap", "open": "los", "fret": "vakje ", "mute": "niet", "and": "en", "dia": "Akkoorddiagram", "strSuffix": "-snaar", "padAria": "Snaren. Veeg omlaag of omhoog om aan te slaan.", "hGuitar": "Gitaar", "title": "Ukelele Oefenkamer", "t1": "Ukelele", "t2": "Oefenkamer", "padHint": "Veeg over de snaren, of tik één snaar aan", "legend": "Cijfers in de stippen: 1 wijsvinger · 2 middelvinger · 3 ringvinger · 4 pink. Een open rondje boven de snaar betekent: snaar los laten klinken."}, "en": {"keys": "Keyboard: <kbd>↓</kbd> down · <kbd>↑</kbd> up · <kbd>space</kbd> rhythm on/off · <kbd>1</kbd>–<kbd>4</kbd> chord", "donateLead": "This app is free. Enjoying it?", "donate": "☕ Buy me a coffee", "reggae": "Reggae · simplified chords", "hPat": "Rhythm pattern", "hSeq": "Your sequence", "down": "Down", "up": "Up", "hAuto": "Automatic rhythm", "start": "Start", "stop": "Stop", "autoSwitch": "Move to the next chord of your sequence every bar", "hLearn": "How to hold the chord", "hProgs": "Practice sequences", "hLevels": "Chords by step", "open": "open", "fret": "fret ", "mute": "muted", "and": "&", "dia": "Chord diagram", "strSuffix": " string", "padAria": "Strings. Swipe down or up to strum.", "hGuitar": "Guitar", "title": "Ukulele Practice Room", "t1": "Ukulele", "t2": "Practice Room", "padHint": "Swipe across the strings, or tap a single string", "legend": "Numbers in the dots: 1 index · 2 middle · 3 ring · 4 pinky. An open circle above a string means: let it ring open."}};
 function t(k){return T[S.lang][k];}
 function L(o){return (o&&typeof o==="object")?o[S.lang]:o;}
 
